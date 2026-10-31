@@ -45,10 +45,12 @@ def _cyr_score(text: str) -> float:
 def fix_mojibake(text: str) -> str:
     if ftfy is not None:
         text = ftfy.fix_text(text, normalization="NFC", uncurl_quotes=False)
-    # типичный «РџСЂРёРІРµС‚» (utf-8, прочитанный как cp1251)
-    if re.search(r"(?:Р[ЃЂ-Яа-я]|С[ЂЃ‚ѓ„…†‡€‰Љ‹ЊЌЋЏ]){4,}", text):
+    # типичный «РџСЂРёРІРµС‚» (utf-8, прочитанный как cp1251): много пар «Р?»/«С?» → пробуем обратное преобразование
+    if len(re.findall(r"[РС][\u0400-\u045f\u2010-\u203a]", text)) >= 3:
         try:
-            text = text.encode("cp1251").decode("utf-8")
+            fixed = text.encode("cp1251").decode("utf-8")
+            if sum(fixed.count(c) for c in "РС") < sum(text.count(c) for c in "РС"):
+                text = fixed
         except (UnicodeEncodeError, UnicodeDecodeError):
             pass
     return text
