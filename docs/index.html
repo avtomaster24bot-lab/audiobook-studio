@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аудиокнига-студия — демо: А. П. Чехов, «Хамелеон»</title>
+<style>
+ :root{--bg:#0f1115;--card:#171a21;--fg:#e8e8ea;--mut:#9aa0aa;--acc:#4fc3f7;--acc2:#ffb74d}
+ *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+ main{max-width:980px;margin:0 auto;padding:32px 20px 60px}h1{font-size:30px;margin:0 0 6px}h2{margin:34px 0 12px;font-size:21px}
+ .mut{color:var(--mut)}.card{background:var(--card);border-radius:14px;padding:20px;margin:14px 0}
+ audio{width:100%;margin-top:8px}table{border-collapse:collapse;width:100%}td,th{padding:7px 10px;border-bottom:1px solid #262a33;text-align:left;vertical-align:top}
+ th{color:var(--mut);font-weight:500}.ok{color:#81c784}a{color:var(--acc)}code{background:#222630;padding:1px 6px;border-radius:5px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.kpi{background:#1d2129;border-radius:10px;padding:14px}
+ .kpi b{display:block;font-size:24px}img{width:100%;border-radius:10px}.btn{display:inline-block;padding:8px 14px;border-radius:9px;background:#222a36;margin:6px 8px 0 0;text-decoration:none}
+</style>
+</head>
+<body><main>
+<h1>Аудиокнига-студия</h1>
+<p class="mut">Книга → многоголосый аудиоспектакль: персонажи и их голоса, эмоции, фоновая музыка по сценам с автоматическим приглушением (ducking), нормализация −16 LUFS, экспорт MP3/M4B.
+<a href="https://github.com/avtomaster24bot-lab/audiobook-studio">Исходный код на GitHub</a>.</p>
+
+<div class="card">
+ <h2 style="margin-top:0">Демо: А. П. Чехов, «Хамелеон» (1884), полностью</h2>
+ <p class="mut">Текст найден автоматически по запросу «Хамелеон Чехов» в Викитеке (общественное достояние). 6 мин 45 с, 6 голосов, 4 музыкальные сцены. Сгенерировано командой <code>python scripts/demo.py "Хамелеон Чехов" --edits scripts/demo_hameleon_edits.json</code>.</p>
+ <audio controls preload="metadata" src="demo/book.mp3"></audio>
+ <a class="btn" href="demo/book.mp3" download>Скачать MP3 (320 kbps, 16 МБ)</a>
+ <a class="btn" href="demo/book.m4b" download>Скачать M4B с главами</a>
+ <a class="btn" href="demo/excerpt_75s.mp3">Отрывок 75 с</a>
+ <a class="btn" href="demo/report.json">report.json</a>
+ <a class="btn" href="demo/verify.json">verify.json</a>
+</div>
+
+<h2>Проверка ducking (музыка не перекрывает голос)</h2>
+<div class="grid">
+ <div class="kpi"><b>−21,7 dB</b><span class="mut">медиана: музыка под речью относительно голоса</span></div>
+ <div class="kpi"><b>−12,5 dB</b><span class="mut">музыка в паузах относительно голоса (цель −12)</span></div>
+ <div class="kpi"><b>9,3 dB</b><span class="mut">глубина приглушения: пауза → речь</span></div>
+ <div class="kpi"><b>0,13 %</b><span class="mut">кадров речи, где музыка громче голоса</span></div>
+ <div class="kpi"><b>−16,0 LUFS</b><span class="mut">интегральная громкость, true peak −1,5 dBFS, LRA 4 LU</span></div>
+</div>
+<div class="card">
+ <img src="demo/ducking.svg" alt="Уровни голоса и музыки после ducking, первые 90 секунд">
+ <p class="mut">Первые 90 с: голубая линия — дорожка голоса, оранжевая — музыка после сайдчейн-компрессора. Во время речи музыка опускается, в паузах поднимается до −12 dB от голоса. Метрики считает <code>scripts/verify_ducking.py</code> по стемам (кадры 50 мс) и по итоговому MP3 (EBU R128).</p>
+</div>
+
+<h2>Голоса в демо</h2>
+<div class="card"><table>
+ <tr><th>Роль</th><th>Голос</th><th>Движок</th></tr>
+ <tr><td>Рассказчик</td><td>Светлана</td><td>Edge TTS (онлайн)</td></tr>
+ <tr><td>Очумелов, полицейский надзиратель</td><td>Айдар (бас, −3 полутона)</td><td>Silero (локально)</td></tr>
+ <tr><td>Хрюкин, золотых дел мастер</td><td>Евгений (хрипловатый)</td><td>Silero</td></tr>
+ <tr><td>Елдырин, городовой</td><td>Евгений</td><td>Silero</td></tr>
+ <tr><td>Прохор, генеральский повар</td><td>Айдар (тенор)</td><td>Silero</td></tr>
+ <tr><td>Голос из толпы</td><td>Евгений (юноша)</td><td>Silero</td></tr>
+</table>
+<p class="mut">Атрибуция реплик в демо — rule-based (без LLM): 30 из 36 реплик автоматически верно (83 %), остальные поправлены вручную через тот же механизм, что и в интерфейсе «Правка атрибуции» (<code>scripts/demo_hameleon_edits.json</code>). С ключом LLM (OpenAI-совместимый API) атрибуция и эмоции уточняются моделью.</p></div>
+
+<h2>Музыкальные сцены</h2>
+<div class="card"><table>
+ <tr><th>Время</th><th>Настроение</th></tr>
+ <tr><td>0:00 – 1:57</td><td>action</td></tr>
+ <tr><td>1:57 – 4:40</td><td>tension</td></tr>
+ <tr><td>4:40 – 5:32</td><td>calm</td></tr>
+ <tr><td>5:32 – 6:45</td><td>light</td></tr>
+</table><p class="mut">Музыка — процедурно сгенерированные лупы (CC0, <code>scripts/generate_music.py</code>), между сценами — равномощные кроссфейды 3 с.</p></div>
+
+<p class="mut">Эта страница — статическое демо на GitHub Pages. Сам сервис (API + веб-интерфейс) запускается локально или на сервере — см. README.</p>
+</main></body></html>

@@ -1,0 +1,149 @@
+{
+ "book": {
+  "book_id": "6ffb5dfbe1378e16",
+  "title": "Хамелеон",
+  "author": "Чехов",
+  "language": "ru",
+  "source": "wikisource",
+  "source_url": "https://ru.wikisource.org/wiki/Хамелеон_(Чехов)/Вариант_ПСС_Чехова_1974—1982",
+  "license_note": "Общественное достояние (ru.wikisource.org, ст. 1281 ГК РФ)",
+  "cover_url": "",
+  "warnings": [],
+  "words": 908,
+  "chapters": [
+   {
+    "index": 0,
+    "title": "Хамелеон",
+    "words": 908
+   }
+  ],
+  "first_paragraph": "Через базарную площадь идёт полицейский надзиратель Очумелов в новой шинели и с узелком в руке. За ним шагает рыжий городовой с решетом, доверху наполненным конфискованным крыжовником. Кругом тишина… На площади ни души… Открытые двери лавок и кабаков глядят на свет божий уныло, как голодные пасти; около них нет даже нищих.",
+  "analysis_method": "rules",
+  "characters": [
+   {
+    "name": "Очумелов",
+    "gender": "male",
+    "age": "adult",
+    "traits": "",
+    "aliases": [
+     "надзиратель"
+    ],
+    "lines": 17
+   },
+   {
+    "name": "Елдырин",
+    "gender": "male",
+    "age": "adult",
+    "traits": "",
+    "aliases": [
+     "городовой"
+    ],
+    "lines": 7
+   },
+   {
+    "name": "Хрюкин",
+    "gender": "male",
+    "age": "adult",
+    "traits": "",
+    "aliases": [],
+    "lines": 5
+   },
+   {
+    "name": "Прохор",
+    "gender": "male",
+    "age": "adult",
+    "traits": "",
+    "aliases": [],
+    "lines": 4
+   },
+   {
+    "name": "Голос из толпы",
+    "gender": "male",
+    "age": "adult",
+    "traits": "",
+    "aliases": [],
+    "lines": 3
+   }
+  ],
+  "voices": {
+   "narrator": "edge-svetlana",
+   "Очумелов": "silero-aidar-low",
+   "Елдырин": "silero-eugene",
+   "Хрюкин": "silero-eugene-low",
+   "Прохор": "silero-aidar-high",
+   "Голос из толпы": "silero-eugene-high"
+  },
+  "estimated_minutes": 6.5
+ },
+ "result": {
+  "chapters": [
+   {
+    "index": 0,
+    "title": "Хамелеон",
+    "duration": 404.56,
+    "music": [
+     {
+      "start": 0.0,
+      "end": 117.24,
+      "mood": "action",
+      "track": "action.mp3"
+     },
+     {
+      "start": 117.24,
+      "end": 280.01,
+      "mood": "tension",
+      "track": "tension.mp3"
+     },
+     {
+      "start": 280.01,
+      "end": 332.16,
+      "mood": "calm",
+      "track": "calm.mp3"
+     },
+     {
+      "start": 332.16,
+      "end": 404.56,
+      "mood": "light",
+      "track": "light.mp3"
+     }
+    ],
+    "ducking": {
+     "speech_frames": 6207,
+     "gap_frames": 990,
+     "voice_rms_db_speech": -25.0,
+     "music_rms_db_under_speech": -45.4,
+     "music_rms_db_in_gaps": -36.4,
+     "voice_minus_music_db": 20.4,
+     "share_speech_frames_music_within_12db": 0.226,
+     "ducking_depth_db": 9.0
+    },
+    "loudness": {
+     "integrated_lufs": -16.0,
+     "lra": 4.0,
+     "true_peak_dbfs": -1.5
+    },
+    "mp3": "chapter_01.mp3"
+   }
+  ],
+  "files": {
+   "mp3": "book.mp3",
+   "m4b": "book.m4b"
+  },
+  "voices": {
+   "narrator": "edge-svetlana",
+   "Очумелов": "silero-aidar-low",
+   "Елдырин": "silero-eugene",
+   "Хрюкин": "silero-eugene-low",
+   "Прохор": "silero-aidar-high",
+   "Голос из толпы": "silero-eugene-high"
+  },
+  "warnings": [],
+  "loudness": {
+   "integrated_lufs": -16.0,
+   "lra": 4.0,
+   "true_peak_dbfs": -1.5
+  },
+  "elapsed_sec": 46.5,
+  "duration_sec": 404.6
+ }
+}

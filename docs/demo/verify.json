@@ -1,0 +1,21 @@
+{
+ "frames_speech": 5386,
+ "frames_gaps": 990,
+ "voice_median_dbfs": -23.9,
+ "music_under_speech_median_dbfs": -45.7,
+ "music_in_gaps_median_dbfs": -36.4,
+ "voice_minus_music_db": {
+  "p5": 8.2,
+  "p50": 21.7,
+  "p95": 34.6
+ },
+ "share_speech_frames_music_louder_than_voice": 0.0013,
+ "share_speech_frames_gap_below_10db": 0.0737,
+ "ducking_depth_db": 9.3,
+ "music_in_gaps_vs_voice_db": -12.5,
+ "final_mp3": {
+  "integrated_lufs": -16.0,
+  "lra_lu": 4.0,
+  "true_peak_dbfs": -1.5
+ }
+}
