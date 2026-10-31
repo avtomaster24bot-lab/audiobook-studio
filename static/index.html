@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аудиокнига-студия — книга в аудиоспектакль</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap row">
+    <div class="logo">🎧 Аудиокнига<span>‑студия</span></div>
+    <nav><a href="#create">Создать</a><a href="#library">Библиотека</a><a href="/docs" target="_blank">API</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Книга → аудиоспектакль</h1>
+    <p>Введите название и автора, ссылку или ISBN — сервис найдёт текст в открытых источниках, распознает персонажей,
+      озвучит каждого своим голосом, подберёт музыку под сцену и приглушит её под речью.</p>
+  </section>
+
+  <section id="create" class="card">
+    <h2>1. Откуда взять текст</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="query">Название / автор</button>
+      <button class="tab" data-tab="url">Ссылка</button>
+      <button class="tab" data-tab="isbn">ISBN</button>
+      <button class="tab" data-tab="file">Файл</button>
+    </div>
+    <form id="srcForm">
+      <div class="pane active" data-pane="query">
+        <div class="grid2">
+          <label>Название<input name="title" placeholder="Хамелеон" value="Хамелеон"></label>
+          <label>Автор<input name="author" placeholder="Чехов" value="Чехов"></label>
+        </div>
+        <p class="hint">Поиск по Викитеке и Project Gutenberg — только произведения в общественном достоянии.</p>
+      </div>
+      <div class="pane" data-pane="url">
+        <label>Ссылка на страницу, оглавление или файл
+          <input name="url" placeholder="https://ru.wikisource.org/wiki/Хамелеон_(Чехов)"></label>
+        <p class="hint">Соблюдаем robots.txt и Crawl-delay; платные стены и DRM не обходим.</p>
+      </div>
+      <div class="pane" data-pane="isbn">
+        <label>ISBN<input name="isbn" placeholder="978-5-..."></label>
+        <p class="hint">Метаданные — Open Library / Google Books, текст — из открытых источников.</p>
+      </div>
+      <div class="pane" data-pane="file">
+        <label class="drop">Перетащите или выберите EPUB, FB2, TXT, DOCX, PDF
+          <input type="file" name="file" accept=".epub,.fb2,.txt,.docx,.pdf,.zip"></label>
+      </div>
+      <label class="check"><input type="checkbox" name="use_llm" id="useLlm"> Использовать LLM для разметки (если настроен ключ)</label>
+      <button class="btn primary" type="submit" id="resolveBtn">Найти и разметить</button>
+      <span id="resolveStatus" class="status"></span>
+    </form>
+  </section>
+
+  <section id="preview" class="card hidden">
+    <h2>2. Проверьте перед генерацией</h2>
+    <div class="meta" id="bookMeta"></div>
+    <blockquote id="firstPar"></blockquote>
+    <div id="warnings"></div>
+
+    <h3>Главы</h3>
+    <div id="chapters" class="chips"></div>
+
+    <h3>Голоса</h3>
+    <table class="voices"><thead><tr><th>Роль</th><th>Реплик</th><th>Голос</th><th></th></tr></thead>
+      <tbody id="voiceRows"></tbody></table>
+
+    <details id="editBox">
+      <summary>Правка атрибуции реплик (опционально)</summary>
+      <div id="segments" class="segments"></div>
+      <button class="btn" id="saveEdits" type="button">Сохранить правки</button>
+    </details>
+
+    <h3>Настройки</h3>
+    <div class="grid3">
+      <label>Темп <output id="rateOut">1.00</output><input type="range" id="rate" min="0.8" max="1.25" step="0.01" value="1"></label>
+      <label>Тон, полутоны <output id="pitchOut">0</output><input type="range" id="pitch" min="-3" max="3" step="0.5" value="0"></label>
+      <label>Громкость музыки <output id="musicOut">−12 dB</output><input type="range" id="musicGain" min="-24" max="-4" step="1" value="-12"></label>
+    </div>
+    <label class="check"><input type="checkbox" id="musicOn" checked> Фоновая музыка с автоприглушением под речью</label>
+    <div class="grid2 formats">
+      <label class="check"><input type="checkbox" name="fmt" value="mp3" checked> MP3 320 kbps (по главам и целиком)</label>
+      <label class="check"><input type="checkbox" name="fmt" value="m4b" checked> M4B с главами</label>
+      <label class="check"><input type="checkbox" name="fmt" value="wav"> WAV</label>
+      <label>Webhook (необязательно)<input id="webhook" placeholder="https://example.com/hook"></label>
+    </div>
+    <div class="actions">
+      <button class="btn" id="previewBtn" type="button">▶ Превью 30 сек</button>
+      <button class="btn primary" id="generateBtn" type="button">Сгенерировать</button>
+    </div>
+  </section>
+
+  <section id="jobCard" class="card hidden">
+    <h2>3. Генерация</h2>
+    <div class="progress"><div id="bar"></div></div>
+    <p id="jobStage" class="status"></p>
+    <div id="jobResult"></div>
+  </section>
+
+  <section id="library" class="card">
+    <h2>Библиотека</h2>
+    <div id="jobs" class="jobs"><p class="hint">Пока пусто.</p></div>
+  </section>
+</main>
+<footer class="wrap foot">Аудиокнига-студия · открытый исходный код · голоса Silero / Microsoft Edge TTS · музыка — процедурная (CC0)</footer>
+<script src="app.js"></script>
+</body>
+</html>
